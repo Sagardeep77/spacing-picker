@@ -1,0 +1,81 @@
+<html>
+
+<style>
+    .box{
+        border: 1px solid black;
+        padding:50px;
+        height: auto;
+        position:relative;
+    }
+    .box-title{
+        position: relative;
+        transform:translateX(-20px);
+        transform:translateY(-20px);
+        left:0;
+    }
+    .box-outer{
+        background-color: azure;
+    }
+    .box-inner{
+        background-color: bisque;
+    }
+    .dropdown-top{
+        position: absolute;
+        top:5%;
+        left:50%;
+    }
+    .dropdown-right{
+        position: absolute;
+        top:50%;
+        right:0.5%;
+    }
+    .dropdown-bottom{
+        position: absolute;
+        bottom:5%;
+        left:50%;
+    }
+    .dropdown-left{
+        position: absolute;
+        left:0.5%;
+        top:50%;
+    }
+
+</style>
+
+<body>
+    <div class="box box-outer">
+        <!-- <p class="box-title">
+            MARGIN
+        </p> -->
+        <select class="dropdown-top" name="top">
+            <option value="auto">
+all
+            </option>
+        </select>
+        <select class="dropdown-right" name="right">
+            <option value="auto">
+all
+            </option>
+        </select>
+        <select class="dropdown-bottom" name="bottom">
+            <option value="auto">
+all
+            </option>
+        </select>
+        <select class="dropdown-left" name="left">
+            <option value="auto">
+all
+            </option>
+        </select>
+        <div class="box box-inner">
+            <!-- <p class="box-title">
+                PADDING
+            </p>
+            <div>
+
+            </div> -->
+        </div>
+    </div>
+</body>
+
+</html>
