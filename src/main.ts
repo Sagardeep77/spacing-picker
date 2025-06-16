@@ -1,1 +1,32 @@
-import './style.css'
+import button from './components/button/index.html?raw';
+
+class CustomButtonComponent extends HTMLElement{
+  private _shadow : ShadowRoot;
+  private _buttonClickCount : number;
+  constructor(){
+    super();
+    this._buttonClickCount = 0;
+    this._shadow = this.attachShadow({mode: 'open'});
+    this.render();
+  }
+
+  connectedCallback(){
+    this.shadowRoot?.addEventListener('click', this.handleInput.bind(this));
+  }
+  disconnectedCallback(){
+    this.shadowRoot?.removeEventListener('click', this.handleInput.bind(this));
+  }
+
+  handleInput(event : Event){
+    this._buttonClickCount++;
+    const customButton = this._shadow.getElementById("customButton") as HTMLButtonElement;
+    customButton.innerHTML = `Clicked : ${this._buttonClickCount}`
+    event.stopPropagation();
+  }
+
+  render(){
+    this._shadow.innerHTML = button;
+  }
+}
+
+customElements.define('custom-button', CustomButtonComponent);
