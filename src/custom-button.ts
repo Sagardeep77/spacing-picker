@@ -1,6 +1,6 @@
 import button from './custom-button.template.html?raw';
 
-class CustomButtonComponent extends HTMLElement{
+export class CustomButtonComponent extends HTMLElement{
   private _shadow : ShadowRoot;
   private _buttonClickCount : number;
   constructor(){

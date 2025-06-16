@@ -1,1 +1,2 @@
-import "./custom-button"
+import "./custom-button";
+export {CustomButtonComponent} from "./custom-button";
