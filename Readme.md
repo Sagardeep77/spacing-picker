@@ -105,15 +105,15 @@ spacing-picker/
 
 ```mermaid
 flowchart TD
-    A[spacing-picker (Custom Element)]
-    B[Shadow DOM]
-    C[spacing-picker.template.html]
-    D[spacing-picker.style.css]
-    E[ComponentState (State Manager)]
-    F[Parent Element (Styled)]
-    G[User Input (UI Controls)]
-    H[constants.ts]
-    I[utilities.ts]
+    A(spacing-picker Custom Element)
+    B(Shadow DOM)
+    C(template.html)
+    D(style.css)
+    E(ComponentState)
+    F(Parent Element)
+    G(User Input Controls)
+    H(constants.ts)
+    I(utilities.ts)
 
     A --> B
     B --> C
@@ -122,11 +122,11 @@ flowchart TD
     A --> E
     E --> H
     E --> I
-    G -- "input/change events" --> A
-    A -- "set/remove style" --> F
-    A -- "update state" --> E
-    E -- "get/set values" --> A
-    G -- "renders controls" --> C
+    G -- input/change events --> A
+    A -- set/remove style --> F
+    A -- update state --> E
+    E -- get/set values --> A
+    G -- renders controls --> C
 ```
 
 ### Data Flow
