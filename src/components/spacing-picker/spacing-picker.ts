@@ -1,6 +1,7 @@
 import spacingPicker from "./spacing-picker.template.html?raw";
 import {
   defaultStatePropValue,
+  fields,
   OPTIONS,
   SubTypeEnum,
   type InputType,
@@ -9,6 +10,7 @@ import {
   type Type,
 } from "../../constants";
 import { ComponentState } from "./spacing-picker-logic";
+import { parseListAttributes } from "../../utilities";
 
 export class SpacingPicker extends HTMLElement {
   private _shadowRoot: ShadowRoot;
@@ -17,11 +19,50 @@ export class SpacingPicker extends HTMLElement {
   private _inputElements!: HTMLElement[];
   private _selectElements!: HTMLElement[];
   private _state = new ComponentState();
-
+  private _disabledList!: string[];
+  private _readonlyList!: string[];
   constructor() {
     super();
     this._shadowRoot = this.attachShadow({ mode: "open" });
+  }
+
+  static get observedAttributes() {
+    return ["disabled", "readonly"];
+  }
+
+  connectedCallback() {
     this.render();
+  }
+
+  disconnectedCallback() {
+    //cleanup
+  }
+
+  attributeChangeCallback(name: string, _: string | null, newVal: string) {
+    if (!newVal) return;
+
+    const parsed = parseListAttributes(newVal);
+    if (name === "disabled") this._disabledList = parsed;
+    if (name === "readonly") this._readonlyList = parsed;
+    this.applyFieldStates();
+  }
+  applyFieldStates() {
+    fields.forEach((key) => {
+      const input = this._shadowRoot.querySelector(`input[name="${key}"]`);
+      const select = this._shadowRoot.querySelector(
+        `select[name="select-${key}"]`
+      );
+
+      if (input) {
+        (input as HTMLInputElement).disabled = this._disabledList?.includes(key);
+        (input as HTMLInputElement).readOnly = this._readonlyList?.includes(key);
+      }
+
+      if (select) {
+        (select as HTMLSelectElement).disabled =
+          this._disabledList?.includes(key);
+      }
+    });
   }
 
   /**
@@ -254,6 +295,12 @@ export class SpacingPicker extends HTMLElement {
     this._grandParent = grandParent;
     this._parent = parent;
     this.renderAllSelect();
+
+    const disabledAttrValue = this.getAttribute("disabled") ?? "";
+    const readOnlyAttrValue = this.getAttribute("readonly") ?? "";
+    this._disabledList = parseListAttributes(disabledAttrValue);
+    this._readonlyList = parseListAttributes(readOnlyAttrValue)
+    this.applyFieldStates();
   };
 }
 

@@ -1,19 +1,18 @@
-
 export enum OPTIONS {
-  SET_VALUE_TO_20PX = 'set value to 20px',
-  SET_ALL_VALUE_TO_VALUE = 'set all value to value',
-  SET_VALUE_TO_AUTO = 'set value to auto',
-  SET_ALL_VALUE_TO_AUTO = 'set all value to auto',
-  REMOVE_CURRENT_VALUE = 'remove current value',
-  REMOVE_ALL_VALUE ='remove all value'
-};
-
-export type InputType  = {
-    type : string;
-    subType? : string;
-    value?: string;
-    shouldUpdateInput?:boolean
+  SET_VALUE_TO_20PX = "set value to 20px",
+  SET_ALL_VALUE_TO_VALUE = "set all value to value",
+  SET_VALUE_TO_AUTO = "set value to auto",
+  SET_ALL_VALUE_TO_AUTO = "set all value to auto",
+  REMOVE_CURRENT_VALUE = "remove current value",
+  REMOVE_ALL_VALUE = "remove all value",
 }
+
+export type InputType = {
+  type: string;
+  subType?: string;
+  value?: string;
+  shouldUpdateInput?: boolean;
+};
 
 export type PropertyValueType = {
   top?: string;
@@ -37,8 +36,8 @@ export type State = {
 
 export enum TypeEnum {
   MARGIN = "margin",
-  PADDING ="padding"
-};
+  PADDING = "padding",
+}
 export type Type = TypeEnum.MARGIN | TypeEnum.PADDING;
 
 export enum SubTypeEnum {
@@ -59,8 +58,8 @@ export type ValueType = {
   value: string;
 };
 
-export type InputValueType =  ValueType & {
-    shouldUpdateInput? : boolean
+export type InputValueType = ValueType & {
+  shouldUpdateInput?: boolean;
 };
 export const defaultStatePropValue = "20px";
 
@@ -85,3 +84,13 @@ export const defaultState = {
   },
 };
 
+export const fields = [
+  "margin-left",
+  "margin-right",
+  "margin-top",
+  "margin-bottom",
+  "padding-left",
+  "padding-right",
+  "padding-top",
+  "padding-bottom",
+];

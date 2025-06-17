@@ -25,3 +25,13 @@ export function isValidPadding(value: string): boolean {
   const fullPattern = new RegExp(`^${singleValue}(\\s+${singleValue}){0,3}$`);
   return fullPattern.test(value.trim());
 }
+
+export function parseListAttributes (value:string):string[] {
+  try {
+    if (value.startsWith("[")) return JSON.parse(value);
+    return value.split(",").map((s) => s.trim());
+  } catch (err) {
+    console.warn("Invalid list format:", value);
+    return [];
+  }
+}
