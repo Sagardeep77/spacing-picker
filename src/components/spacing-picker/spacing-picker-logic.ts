@@ -61,7 +61,6 @@
 //   setValue(inputOptions);
 // };
 
-
 // const setValue = function ({ type, subType, value } : InputType) {
 //   parentElement.style[`${type}-${subType}`] = value;
 // };
@@ -142,3 +141,94 @@
 // };
 
 // renderAllSelect();
+import {
+  defaultState,
+  SubTypeEnum,
+  TypeEnum,
+  type Type,
+  type PropertyValueType,
+  type State,
+  type SubType,
+  type ValueType,
+} from "../../constants";
+import { isValidMargin, isValidPadding } from "../../utilities";
+
+export class ComponentState {
+  private _state: State;
+
+  constructor() {
+    this._state = defaultState;
+  }
+
+  getState = () => {
+    return this._state;
+  };
+
+  getValue = (type: "margin" | "padding", subType: SubType) => {
+    return this._state.value[type][subType as keyof PropertyValueType];
+  };
+
+  validateValue = (type: Type, value: string) => {
+    if (type === TypeEnum.MARGIN && !isValidMargin(value)) {
+    //   throw new Error("Not a valid Margin value");
+    }
+
+    if (type === TypeEnum.PADDING && !isValidPadding(value)) {
+    //   throw new Error("Not a valid Padding value");
+    }
+  };
+
+  updateValue = ({ type, subType, value }: ValueType) => {
+    this.validateValue(type as Type, value);
+    if (type === TypeEnum.MARGIN && type && subType) {
+      this._state.value[type][subType as keyof PropertyValueType] = value;
+    }
+    this._state.changed =  { margin: {}, padding: {} };
+    if (!this._state.changed[type]) {
+      this._state.changed[type] = {};
+    }
+    console.log(this._state)
+    this._state.changed[type][subType] = value;
+    return this._state;
+  };
+
+  updateAllValue = ({
+    type,
+    value,
+  }: {
+    type: "margin" | "padding";
+    value: string;
+  }) => {
+    this.validateValue(type as Type, value);
+
+    for (const enumValue of Object.values(SubTypeEnum)) {
+      this._state.value[type][enumValue as keyof PropertyValueType] = value;
+    }
+    this._state.changed =  { margin: {}, padding: {} };
+    if (!this._state.changed[type]) {
+      this._state.changed[type] = {
+        [SubTypeEnum.TOP] :value,
+        [SubTypeEnum.RIGHT] : value,
+        [SubTypeEnum.BOTTOM] : value,
+        [SubTypeEnum.LEFT] : value
+      };
+    }
+    for (const enumValue of Object.values(SubTypeEnum)) {
+      this._state.changed[type][enumValue as keyof PropertyValueType] = value;
+    }
+    console.log(this._state)
+    return this._state;
+  };
+
+  removeValue = ({ type, subType }: ValueType) => {
+    if (type === TypeEnum.MARGIN && type && subType) {
+      this._state.value[type][subType as keyof PropertyValueType] = "";
+    }
+    return this._state;
+  };
+
+  removeAllValue = ({ type }: { type: "margin" | "padding" }) => {
+    this._state.value[type] = defaultState.value[type];
+    return this._state;
+  };
+}
