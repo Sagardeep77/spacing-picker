@@ -3,7 +3,6 @@ import {
   defaultStatePropValue,
   OPTIONS,
   SubTypeEnum,
-  TypeEnum,
   type InputType,
   type InputValueType,
   type SubType,
