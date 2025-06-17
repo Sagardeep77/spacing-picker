@@ -1,6 +1,5 @@
 import { defineConfig } from 'vite';
 import htmlMinify from 'vite-plugin-html-minify';
-import { visualizer } from 'rollup-plugin-visualizer';
 
 
 export default defineConfig({
@@ -23,12 +22,6 @@ export default defineConfig({
       removeComments: true,
       minifyCSS: true,
       minifyJS: true,
-    }),
-    visualizer({
-      filename: 'dist/stats.html',
-      open: true, // opens the report in browser automatically
-      gzipSize: true,
-      brotliSize: true,
     }),
   ]
 });

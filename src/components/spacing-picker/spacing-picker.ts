@@ -23,16 +23,21 @@ export class SpacingPicker extends HTMLElement {
     this._shadowRoot = this.attachShadow({ mode: "open" });
     this.render();
   }
-  connectedCallback() {
-    // this.shadowRoot.addEventListener
-  }
 
-  disconnectedCallback() {}
-
+  /**
+   * Splits a string by '-' and returns an array of lowercase strings.
+   * @param str - The input string.
+   * @returns An array of lowercase strings.
+   */
   getType = (str: string) => {
     return str.split("-").map((e) => e.toLowerCase());
   };
 
+  /**
+   * Extracts the type and subtype from a select element's name attribute.
+   * @param str - The select element's name.
+   * @returns A tuple containing the type and subtype.
+   */
   getTypeFromSelect = (str: string): [Type, SubType] => {
     const [type, subType] = str
       .split("-")
@@ -42,6 +47,10 @@ export class SpacingPicker extends HTMLElement {
     return [type as Type, subType as SubType];
   };
 
+  /**
+   * Sets the value for a specific type and subtype, updates the state and input if needed.
+   * @param params - Object containing type, subType, value, and shouldUpdateInput.
+   */
   setValue = ({ type, subType, value, shouldUpdateInput }: InputValueType) => {
     this._state.updateValue({ type, subType, value });
     const key = `${type}-${subType}`;
@@ -59,10 +68,13 @@ export class SpacingPicker extends HTMLElement {
     }
   };
 
+  /**
+   * Sets the same value for all subtypes of a given type.
+   * @param params - Object containing type and value.
+   */
   setAllValue = ({ type, value }: InputValueType) => {
-
     this._state.updateAllValue({ type, value });
-    const statePropValue = this._state.getValue(type,SubTypeEnum.TOP) ?? "";
+    const statePropValue = this._state.getValue(type, SubTypeEnum.TOP) ?? "";
     this._parent.style.setProperty(type, statePropValue);
     const filteredInputElements = this._inputElements.filter((input) =>
       input.getAttribute("name")?.includes(type)
@@ -72,23 +84,40 @@ export class SpacingPicker extends HTMLElement {
     }
   };
 
+  /**
+   * Removes the value for a specific type and subtype.
+   * @param params - Object containing type and subType.
+   */
   removeValue = ({ type, subType }: InputValueType) => {
     this._parent.style.removeProperty(`${type}-${subType}`);
     this._state.removeValue({ type, subType, value: "" });
   };
 
-  removeAllValue = (type : Type) => {
-    for(const subType of Object.values(SubTypeEnum)){
-        this._parent.style.removeProperty(`${type}-${subType}`);
-        this._state.removeValue({type, subType: subType as SubType, value : ""});
-        this.setAllValue({type, subType: subType as SubType, value : ""})
+  /**
+   * Removes all values for a given type.
+   * @param type - The type for which all values should be removed.
+   */
+  removeAllValue = (type: Type) => {
+    for (const subType of Object.values(SubTypeEnum)) {
+      this._parent.style.removeProperty(`${type}-${subType}`);
+      this._state.removeValue({ type, subType: subType as SubType, value: "" });
+      this.setAllValue({ type, subType: subType as SubType, value: "" });
     }
   };
 
+  /**
+   * Gets the current value for a specific type and subtype from the parent style.
+   * @param params - Object containing type and subType.
+   * @returns The current value as a string.
+   */
   getCurrentValue = ({ type, subType }: InputType) => {
     return this._parent.style.getPropertyValue(`${type}-${subType}`);
   };
 
+  /**
+   * Handles dropdown (select) change events and updates values accordingly.
+   * @param event - The change event from the select element.
+   */
   handleDropdown = (event: Event) => {
     event.stopPropagation();
     const { name, value } = event.target as HTMLInputElement;
@@ -106,8 +135,8 @@ export class SpacingPicker extends HTMLElement {
       }
 
       case OPTIONS.SET_ALL_VALUE_TO_VALUE: {
-        const currentValue = this._state.getValue(type,subType);
-        if(!currentValue) return ;
+        const currentValue = this._state.getValue(type, subType);
+        if (!currentValue) return;
         this.setAllValue({
           type,
           subType,
@@ -148,6 +177,10 @@ export class SpacingPicker extends HTMLElement {
     }
   };
 
+  /**
+   * Handles input events for value changes in input elements.
+   * @param event - The input event from the input element.
+   */
   handleInput = (event: Event) => {
     event.stopPropagation();
     if (!event.target) return;
@@ -162,6 +195,10 @@ export class SpacingPicker extends HTMLElement {
     this.setValue(inputOptions);
   };
 
+  /**
+   * Creates and appends option elements to a select element.
+   * @param selectElement - The select element to populate.
+   */
   createOptions = (selectElement: HTMLElement) => {
     OPTIONS;
     for (const value of Object.values(OPTIONS)) {
@@ -181,6 +218,9 @@ export class SpacingPicker extends HTMLElement {
     }
   };
 
+  /**
+   * Renders all select and input elements, attaches event listeners, and sets default values.
+   */
   renderAllSelect = () => {
     if (!this._grandParent) {
       throw new Error("No  html element with id grandParent");
@@ -200,6 +240,9 @@ export class SpacingPicker extends HTMLElement {
     }
   };
 
+  /**
+   * Renders the component's HTML template and initializes elements and event listeners.
+   */
   render = () => {
     this._shadowRoot.innerHTML = spacingPicker;
     const grandParent = this._shadowRoot.getElementById("grandParent");
@@ -215,15 +258,3 @@ export class SpacingPicker extends HTMLElement {
 }
 
 customElements.define("spacing-picker", SpacingPicker);
-
-
-/* Pending items */
-
-
-/* 
-1. don't set invalid values
-2. 
-
-*/
-
-

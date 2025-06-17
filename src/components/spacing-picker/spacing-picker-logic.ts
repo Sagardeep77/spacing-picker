@@ -1,146 +1,3 @@
-// import { OPTIONS, TYPES } from "../../constants";
-// import { isValidMargin, isValidPadding } from "../../utilities";
-
-// const grandParentElement = document.getElementById('grandParent') as HTMLElement;
-// const parentElement = document.getElementById('parent') as HTMLElement;
-
-// Reference point is parent element.
-// We will modify the margin of parent and padding of parent element.
-
-// function getType(str : string) {
-//   return str.split('-').map(e => e.toLowerCase());
-// }
-
-// function getTypeFromSelect(str : string) {
-//   return str.split('-').map(e => e.toLowerCase()).slice(1);
-// }
-
-// function createOptions(selectElement : HTMLElement) {
-//     OPTIONS
-//   for (const value of Object.values(OPTIONS)) {
-//     const optionElement = document.createElement('option');
-//     optionElement.value = value;
-//     optionElement.innerHTML = value;
-//     selectElement.appendChild(optionElement);
-//   }
-// }
-
-// function renderAllSelect() {
-//   const selectElements = grandParentElement.getElementsByTagName('select');
-//   for (const select of selectElements) {
-//     createOptions(select);
-//     select.addEventListener('change', handleDropdown);
-//   }
-
-//   const inputElements = grandParentElement.getElementsByTagName('input');
-//   for (const input of inputElements) {
-//     input.addEventListener('input', handleInput);
-//   }
-// }
-
-// const handleInput = function (event:Event) {
-//   console.log("Input triggered")
-//   event.stopPropagation();
-//   if(!event.target) return;
-//   const { name, value } = event.target as HTMLInputElement;
-//   const [type, subType] = getType(name);
-
-//   if (type === TYPES.MARGIN && !isValidMargin(value)) {
-//     throw new Error("Not a valid Margin value");
-//   }
-
-//   if (type === TYPES.PADDING && !isValidPadding(value)) {
-//     throw new Error("Not a valid Padding value");
-//   }
-
-//   const inputOptions = {
-//     type,
-//     subType,
-//     value
-//   };
-//   setValue(inputOptions);
-// };
-
-// const setValue = function ({ type, subType, value } : InputType) {
-//   parentElement.style[`${type}-${subType}`] = value;
-// };
-
-// const setAllValue = function ({ type, value } : InputType) {
-//   parentElement.style[type] = value;
-// };
-
-// const removeValue = function ({ type, subType } : InputType) {
-//   parentElement.style.removeProperty(`${type}-${subType}`);
-// };
-
-// const removeAllValue = function ({ type } : InputType) {
-//   parentElement.style.removeProperty(type);
-// };
-
-// const getCurrentValue = function ({ type, subType } : InputType) {
-//   return parentElement.style[`${type}-${subType}`];
-// };
-
-// const handleDropdown = function (event: Event) {
-//     console.log("Dropdown triggered")
-
-//   event.stopPropagation();
-//   const { name, value } = event.target as HTMLInputElement;
-//   const [type, subType] = getTypeFromSelect(name);
-
-//   switch (value) {
-//     case OPTIONS.SET_VALUE_TO_20PX: {
-//       setValue({
-//         type,
-//         subType,
-//         value: '20px'
-//       });
-//       break;
-//     }
-
-//     case OPTIONS.SET_ALL_VALUE_TO_VALUE: {
-//       const currentValue = getCurrentValue({ type, subType });
-//       setAllValue({
-//         type,
-//         value: currentValue
-//       });
-//       break;
-//     }
-
-//     case OPTIONS.SET_VALUE_TO_AUTO: {
-//       setValue({
-//         type,
-//         subType,
-//         value: 'auto'
-//       });
-//       break;
-//     }
-
-//     case OPTIONS.SET_ALL_VALUE_TO_AUTO: {
-//       setAllValue({
-//         type,
-//         value: 'auto'
-//       });
-//       break;
-//     }
-
-//     case OPTIONS.REMOVE_CURRENT_VALUE: {
-//       removeValue({ type, subType });
-//       break;
-//     }
-
-//     case OPTIONS.REMOVE_ALL_VALUE: {
-//       removeAllValue({ type });
-//       break;
-//     }
-//   }
-
-//   if (type === TYPES.PADDING && !isValidPadding(getCurrentValue({ type, subType }))) {
-//     throw new Error("Not a valid Padding value");
-//   }
-// };
-
-// renderAllSelect();
 import {
   defaultState,
   SubTypeEnum,
@@ -153,81 +10,125 @@ import {
 } from "../../constants";
 import { isValidMargin, isValidPadding } from "../../utilities";
 
+/**
+ * Manages the state for spacing (margin/padding) values and provides methods to update, validate, and remove them.
+ * @remarks
+ * Used internally by the SpacingPicker component to synchronize UI and CSS state.
+ */
 export class ComponentState {
   private _state: State;
 
+  /**
+   * Creates a new ComponentState instance with the default state.
+   */
   constructor() {
     this._state = defaultState;
   }
 
-  getState = () => {
+  /**
+   * Returns the current state object.
+   * @returns The current state.
+   */
+  getState = (): State => {
     return this._state;
   };
 
-  getValue = (type: "margin" | "padding", subType: SubType) => {
-    return this._state.value[type][subType as keyof PropertyValueType];
+  /**
+   * Gets the value for a specific type and subtype.
+   * @param type - The spacing type ("margin" or "padding").
+   * @param subType - The subtype (top, right, bottom, left).
+   * @returns The value as a string.
+   */
+  getValue = (type: "margin" | "padding", subType: SubType): string => {
+    return this._state.value[type][subType as keyof PropertyValueType] ?? "";
   };
 
-  validateValue = (type: Type, value: string) => {
+  /**
+   * Validates a value for the given spacing type.
+   * @param type - The spacing type.
+   * @param value - The value to validate.
+   */
+  validateValue = (type: Type, value: string): void => {
     if (type === TypeEnum.MARGIN && !isValidMargin(value)) {
-    //   throw new Error("Not a valid Margin value");
+      // throw new Error("Not a valid Margin value");
     }
-
     if (type === TypeEnum.PADDING && !isValidPadding(value)) {
-    //   throw new Error("Not a valid Padding value");
+      // throw new Error("Not a valid Padding value");
     }
   };
 
-  updateValue = ({ type, subType, value }: ValueType) => {
+  /**
+   * Updates the value for a specific type and subtype.
+   * @param params - Object containing type, subType, and value.
+   * @returns The updated state.
+   */
+  updateValue = ({ type, subType, value }: ValueType): State => {
     this.validateValue(type as Type, value);
     if (type === TypeEnum.MARGIN && type && subType) {
       this._state.value[type][subType as keyof PropertyValueType] = value;
     }
-    this._state.changed =  { margin: {}, padding: {} };
+    this._state.changed = { margin: {}, padding: {} };
     if (!this._state.changed[type]) {
       this._state.changed[type] = {};
     }
-    console.log(this._state)
+    // Log the state for debugging
+    console.log(this._state);
     this._state.changed[type][subType] = value;
     return this._state;
   };
 
+  /**
+   * Updates all subtypes for a given type with the same value.
+   * @param params - Object containing type and value.
+   * @returns The updated state.
+   */
   updateAllValue = ({
     type,
     value,
   }: {
     type: "margin" | "padding";
     value: string;
-  }) => {
+  }): State => {
     this.validateValue(type as Type, value);
 
     for (const enumValue of Object.values(SubTypeEnum)) {
       this._state.value[type][enumValue as keyof PropertyValueType] = value;
     }
-    this._state.changed =  { margin: {}, padding: {} };
+    this._state.changed = { margin: {}, padding: {} };
     if (!this._state.changed[type]) {
       this._state.changed[type] = {
-        [SubTypeEnum.TOP] :value,
-        [SubTypeEnum.RIGHT] : value,
-        [SubTypeEnum.BOTTOM] : value,
-        [SubTypeEnum.LEFT] : value
+        [SubTypeEnum.TOP]: value,
+        [SubTypeEnum.RIGHT]: value,
+        [SubTypeEnum.BOTTOM]: value,
+        [SubTypeEnum.LEFT]: value,
       };
     }
     for (const enumValue of Object.values(SubTypeEnum)) {
       this._state.changed[type][enumValue as keyof PropertyValueType] = value;
     }
-    console.log(this._state)
+    // Log the state for debugging
+    console.log(this._state);
     return this._state;
   };
 
-  removeValue = ({ type, subType }: ValueType) => {
+  /**
+   * Removes the value for a specific type and subtype.
+   * @param params - Object containing type and subType.
+   * @returns The updated state.
+   */
+  removeValue = ({ type, subType }: ValueType): State => {
     if (type === TypeEnum.MARGIN && type && subType) {
       this._state.value[type][subType as keyof PropertyValueType] = "";
     }
     return this._state;
   };
 
-  removeAllValue = ({ type }: { type: "margin" | "padding" }) => {
+  /**
+   * Removes all values for a given type, resetting to default.
+   * @param params - Object containing type.
+   * @returns The updated state.
+   */
+  removeAllValue = ({ type }: { type: "margin" | "padding" }): State => {
     this._state.value[type] = defaultState.value[type];
     return this._state;
   };

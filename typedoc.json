@@ -1,0 +1,9 @@
+{
+  "entryPoints": ["src/main.ts"],
+  "out": "docs",
+  "includeVersion": true,
+  "excludePrivate": true,
+  "excludeInternal": true,
+  "excludeExternals": true,
+  "tsconfig": "tsconfig.json"
+}
