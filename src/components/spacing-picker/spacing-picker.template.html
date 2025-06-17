@@ -1,0 +1,83 @@
+
+<div id="grandParent" class="box">
+  <div class="box-input box-input-top">
+    <input type="text" value="" name="margin-top">
+    <select class="select-margin-top" name="select-margin-top">
+
+    </select>
+  </div>
+  <div class="box-input box-input-right">
+    <input type="text" value="" name="margin-right">
+    <select class="select-margin-right" name="select-margin-right">
+    </select>
+  </div>
+  <div class="box-input box-input-bottom">
+    <input type="text" value="" name="margin-bottom">
+    <select class="select-margin-bottom" name="select-margin-bottom">
+    </select>
+  </div>
+  <div class="box-input box-input-left">
+    <input type="text" value="" name="margin-left">
+    <select class="select-margin-left" name="select-margin-left">
+    </select>
+  </div>
+  <div id="parent" class="box-inner">
+    <div id="content" class="box-inner-most">
+    </div>
+  </div>
+</div>
+
+</div>
+
+<style>
+    .box {
+    position: relative;
+    border: 1px solid black;
+    background-color: #9a9a8a;
+  }
+  .box-inner {
+    height: 100px;
+    border: 1px solid black;
+    background-color: #dcdcc6;
+    display : flex;
+    justify-content:center;
+    align-items:center;
+    margin:20px;
+    padding:20px;
+  }
+  .box-inner-most {
+    width: 100%;
+    height: 100%;
+    height: 50px;
+    background-color: #fff;
+    border: 1px solid black;
+  }
+  
+  div.box-input{
+    position: absolute;
+    display:flex;
+  }
+  div.box-input input{
+    width : 50px;
+  }
+  div.box-input select{
+    width : 20px;
+  }
+  div.box-input-top {
+    top: 20px;
+    left: 50%;
+  }
+  div.box-input-right {
+    top: 50%;
+    right: 10px;
+  }
+  div.box-input-bottom {
+    bottom: 10px;
+    left: 50%;
+  }
+  div.box-input-left {
+    top: 50%;
+    left: 10px;
+  }
+  
+</style>

@@ -1,0 +1,50 @@
+.box {
+    position: relative;
+    border: 1px solid black;
+    background-color: #9a9a8a;
+  }
+  .box-inner {
+    height: 100px;
+    border: 1px solid black;
+    background-color: #dcdcc6;
+    display : flex;
+    justify-content:center;
+    align-items:center;
+    margin:20px;
+    padding:20px;
+  }
+  .box-inner-most {
+    width: 100%;
+    height: 100%;
+    height: 50px;
+    background-color: #fff;
+    border: 1px solid black;
+  }
+  
+  div.box-input{
+    position: absolute;
+    display:flex;
+  }
+  div.box-input input{
+    width : 50px;
+  }
+  div.box-input select{
+    width : 20px;
+  }
+  div.box-input-top {
+    top: 20px;
+    left: 50%;
+  }
+  div.box-input-right {
+    top: 50%;
+    right: 10px;
+  }
+  div.box-input-bottom {
+    bottom: 10px;
+    left: 50%;
+  }
+  div.box-input-left {
+    top: 50%;
+    left: 10px;
+  }
+  
