@@ -1,4 +1,5 @@
 <div id="grandParent" class="box">
+    <h5>Margin</h5>
     <div class="box-input box-input-top">
         <input type="text" value="" name="margin-top">
         <select class="select-margin-top" name="select-margin-top">
@@ -21,6 +22,8 @@
         </select>
     </div>
     <div id="parent" class="box-inner">
+            <h5>Padding</h5>
+
         <div class="box-input box-input-top">
             <input type="text" value="" name="padding-top">
             <select class="select-padding-top" name="select-padding-top">
@@ -74,6 +77,11 @@
         height: 50px;
         background-color: #fff;
         border: 1px solid black;
+    }
+    h5{
+        position: absolute;
+        top:0;
+        left:2px;
     }
 
     div.box-input {
