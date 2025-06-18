@@ -1,6 +1,6 @@
 {
   "name": "@sagardeep77/spacing-picker",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "type": "module",
   "main": "dist/main.js",
   "publishConfig": {
@@ -11,7 +11,8 @@
     "build": "tsc && vite build && docs",
     "preview": "vite preview",
     "analyze": "vite build && source-map-explorer dist/assets/*.js",
-    "docs": "typedoc"
+    "docs": "typedoc",
+    "prepare": "npm run build"
   },
   "devDependencies": {
     "typedoc": "^0.28.5",
