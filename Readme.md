@@ -171,11 +171,9 @@ Pull requests and issues are welcome! Please open an issue to discuss your ideas
 ## 🖼️ Demo
 
 Demo & Resources
-Live Demo: Spacing Picker Demo
+Live Demo: [Spacing Picker Demo](https://sagar-deep-kushwaha-portfolio.vercel.app/spacing-picker-package-demo)
 
-NPM Package: @sagardeep77/spacing-picker
-
-GitHub Repository: GitHub - spacing-picker
+NPM Package: [@sagardeep77/spacing-picker](https://www.npmjs.com/package/@sagardeep77/spacing-picker)
 
 ---
 
