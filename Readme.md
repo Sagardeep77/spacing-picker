@@ -170,7 +170,12 @@ Pull requests and issues are welcome! Please open an issue to discuss your ideas
 
 ## 🖼️ Demo
 
-![Spacing Picker Demo](https://user-images.githubusercontent.com/your-demo-image.png)
+Demo & Resources
+Live Demo: Spacing Picker Demo
+
+NPM Package: @sagardeep77/spacing-picker
+
+GitHub Repository: GitHub - spacing-picker
 
 ---
 
