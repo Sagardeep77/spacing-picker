@@ -50,10 +50,10 @@ export class ComponentState {
    */
   validateValue = (type: Type, value: string): void => {
     if (type === TypeEnum.MARGIN && !isValidMargin(value)) {
-      // throw new Error("Not a valid Margin value");
+      throw new Error("Not a valid Margin value");
     }
     if (type === TypeEnum.PADDING && !isValidPadding(value)) {
-      // throw new Error("Not a valid Padding value");
+      throw new Error("Not a valid Padding value");
     }
   };
 
@@ -63,10 +63,14 @@ export class ComponentState {
    * @returns The updated state.
    */
   updateValue = ({ type, subType, value }: ValueType): State => {
-    this.validateValue(type as Type, value);
-    if (type === TypeEnum.MARGIN && type && subType) {
-      this._state.value[type][subType as keyof PropertyValueType] = value;
+    try {
+      this.validateValue(type as Type, value);
+    } catch (error) {
+      return this._state;
     }
+
+    this._state.value[type][subType as keyof PropertyValueType] = value;
+
     this._state.changed = { margin: {}, padding: {} };
     if (!this._state.changed[type]) {
       this._state.changed[type] = {};
